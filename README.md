@@ -87,6 +87,7 @@ See the example directory for more detailed usage.
 
 # Compile
 
-  `cd src` and `coffee -o ../ -c chosen.coffee`
+`cd src` and `coffee -o ../ -c angular-chosen.coffee`
 
+Usage of Grunt is planned.
 
