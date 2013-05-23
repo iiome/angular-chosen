@@ -1,6 +1,6 @@
-angular.module('localytics.directives', [])
+angular.module('angular-chosen', [])
 
-angular.module('localytics.directives').directive 'chosen', ['$timeout', ($timeout) ->
+angular.module('angular-chosen').directive 'chosen', ['$timeout', ($timeout) ->
   
   # This is stolen from Angular...
   NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w\d]*)|(?:\(\s*([\$\w][\$\w\d]*)\s*,\s*([\$\w][\$\w\d]*)\s*\)))\s+in\s+(.*)$/
@@ -34,7 +34,15 @@ angular.module('localytics.directives').directive 'chosen', ['$timeout', ($timeo
         element.empty().append("<option selected>#{message}</option>").attr('disabled', true).trigger('liszt:updated')
 
       # Init chosen on the next loop so ng-options can populate the select
-      $timeout -> element.chosen options
+      $timeout ->
+        chosen = element.chosen options
+        element.val(ngModel.$viewValue || '').trigger("liszt:updated")
+      return chosen
+
+      ngModel.$render = ->
+        element.val(ngModel.$viewValue || '')
+        $timeout ->
+          element.trigger("liszt:updated")
 
       # Watch the collection in ngOptions and update chosen when it changes.  This works with promises!
       if attr.ngOptions
