@@ -2,9 +2,9 @@
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module('localytics.directives', []);
+  angular.module('angular-chosen', []);
 
-  angular.module('localytics.directives').directive('chosen', [
+  angular.module('angular-chosen').directive('chosen', [
     '$timeout', function($timeout) {
       var CHOSEN_OPTION_WHITELIST, NG_OPTIONS_REGEXP, chosen, isEmpty, snakeCase;
 
@@ -51,8 +51,16 @@
             return element.empty().append("<option selected>" + message + "</option>").attr('disabled', true).trigger('liszt:updated');
           };
           $timeout(function() {
-            return element.chosen(options);
+            chosen = element.chosen(options);
+            return element.val(ngModel.$viewValue || '').trigger("liszt:updated");
           });
+          return chosen;
+          ngModel.$render = function() {
+            element.val(ngModel.$viewValue || '');
+            return $timeout(function() {
+              return element.trigger("liszt:updated");
+            });
+          };
           if (attr.ngOptions) {
             match = attr.ngOptions.match(NG_OPTIONS_REGEXP);
             valuesExpr = match[7];
