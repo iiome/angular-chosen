@@ -32,7 +32,8 @@
       };
       return chosen = {
         restrict: 'A',
-        link: function(scope, element, attr) {
+        require: '?ngModel',
+        link: function(scope, element, attr, ngModel) {
           var disableWithMessage, match, options, startLoading, stopLoading, valuesExpr;
 
           options = scope.$eval(attr.chosen) || {};

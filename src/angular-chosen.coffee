@@ -18,7 +18,8 @@ angular.module('angular-chosen').directive 'chosen', ['$timeout', ($timeout) ->
 
   chosen =
     restrict: 'A'
-    link: (scope, element, attr) ->
+    require: '?ngModel'
+    link: (scope, element, attr, ngModel) ->
 
       # Take a hash of options from the chosen directive
       options = scope.$eval(attr.chosen) or {}
