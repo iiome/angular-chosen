@@ -38,7 +38,7 @@ angular.module('angular-chosen').directive 'chosen', ['$timeout', ($timeout) ->
       $timeout ->
         chosen = element.chosen options
         element.val(ngModel.$viewValue || '').trigger("liszt:updated")
-      return chosen
+        return chosen
 
       ngModel.$render = ->
         element.val(ngModel.$viewValue || '')
